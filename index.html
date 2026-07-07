@@ -105,6 +105,12 @@ body.skin-dst .dst-ribbons{display:block;}
 .brand-zh{font-family:'Noto Serif SC',serif;font-size:calc(15px * var(--fs));color:var(--text1);font-weight:600;letter-spacing:2px;opacity:.85;}
 .brand-en{font-size:calc(9px * var(--fs));letter-spacing:2.5px;text-transform:uppercase;color:var(--text3);}
 .hdr-btns{display:flex;gap:5px;}
+/* 左下角悬浮按钮组 */
+#floatBtns{position:fixed;bottom:28px;left:28px;z-index:9998;display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+.float-btn{display:flex;align-items:center;gap:8px;padding:0 16px;height:40px;border-radius:20px;border:1px solid rgba(255,255,255,.20);background:rgba(15,10,40,.65);color:rgba(255,255,255,.78);font-size:12.5px;font-weight:600;letter-spacing:.3px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:all .22s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 18px rgba(0,0,0,.40);}
+.float-btn:hover{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.38);transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.50);}
+.float-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.float-btn.dl-btn:hover{background:rgba(56,189,248,.18);border-color:rgba(56,189,248,.45);color:#7dd3fc;}
 .icon-btn{width:29px;height:29px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.55);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;font-family:var(--font);}
 .icon-btn:hover{background:rgba(255,255,255,.15);color:#fff;transform:scale(1.08);}
 .icon-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
@@ -421,6 +427,7 @@ body.skin-starfield .fs-stars{display:block;}
         <button class="icon-btn" id="mainDarkBtn" onclick="toggleMainDark()" title="Dark Cosmos" style="font-size:13px;">&#10022;</button>
         <button class="icon-btn" onclick="openSettings()" title="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
         <button class="icon-btn" onclick="openAbout()" title="About"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+
       </div>
     </div>
     <div class="primary-clock">
@@ -1074,6 +1081,18 @@ checkDST();tick();setInterval(tick,1000);
 <!-- ══════════════ DYNAMIC BG CANVAS ══════════════ -->
 
 <canvas id="mpBgCanvas"></canvas>
+<!-- ══════════════ FLOAT BUTTONS ══════════════ -->
+<div id="floatBtns">
+  <a class="float-btn github-btn" href="https://github.com/JaminFX/shiguang-world-clock" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5 5 0 0 0 20 4.77 4.92 4.92 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A4.92 4.92 0 0 0 5 4.77a5 5 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    GitHub
+  </a>
+  <a class="float-btn dl-btn" href="https://github.com/JaminFX/shiguang-world-clock/releases/download/v3.7.0/Shiguang.Setup.3.7.0.exe" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Windows Setup
+  </a>
+</div>
+
 <!-- ══════════════ MUSIC PLAYER ══════════════ -->
 <div id="musicPlayer">
   <div id="musicPanel">
@@ -1730,9 +1749,12 @@ mpUpdateUI();
 </script>
 </body>
 <script>
-if (window.desktopAPI && window.desktopAPI.isDesktop) {
+// ══════════════════════════════════════════
+//   网页版增强功能（自定义背景 + 动态叠加特效）
+// ══════════════════════════════════════════
 
-  // 圆润滚动条 + 按钮开启状态更明显 + 自定义背景层 / 特效画布的基础样式
+// ── 圆润滚动条 + 样式增强 ──
+(function(){
   var style = document.createElement('style');
   style.textContent =
     '::-webkit-scrollbar{width:7px;height:7px;}' +
@@ -1741,459 +1763,368 @@ if (window.desktopAPI && window.desktopAPI.isDesktop) {
     ':hover::-webkit-scrollbar-thumb,.scrolling::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--accent) 55%,transparent);}' +
     '.icon-btn.on{background:color-mix(in srgb,var(--accent) 45%,transparent)!important;border-color:color-mix(in srgb,var(--accent) 85%,transparent)!important;color:#fff!important;box-shadow:0 0 10px color-mix(in srgb,var(--accent) 55%,transparent);}' +
     '#customBgLayer{position:fixed;inset:0;z-index:-1;background-size:cover;background-position:center;filter:blur(14px);transform:scale(1.08);transition:filter .25s;display:none;}' +
-    'body.custom-bg-on{background:transparent!important;}' +
     'body.custom-bg-on #customBgLayer{display:block;}' +
     'body.custom-bg-on .fs-overlay{background:transparent!important;}' +
     '#fsCustomBgLayer{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(14px);transform:scale(1.08);display:none;z-index:0;}' +
     'body.custom-bg-on #fsCustomBgLayer{display:block;}' +
-    '#dynFxCanvas{position:fixed;inset:0;z-index:1;pointer-events:none;}' +
-    '#fsDynFxCanvas{position:absolute;inset:0;z-index:1;pointer-events:none;}' +
+    '#dynFxCanvas{position:fixed;inset:0;z-index:3;pointer-events:none;}' +
+    '#fsDynFxCanvas{position:absolute;inset:0;z-index:2;pointer-events:none;}' +
+    '.pill.on{background:color-mix(in srgb,var(--accent) 35%,transparent)!important;border-color:color-mix(in srgb,var(--accent) 70%,transparent)!important;color:#fff!important;}' +
     '.hdr-btns{flex-wrap:wrap;justify-content:flex-end;row-gap:5px;}' +
-    '.widget-header{align-items:flex-start;flex-wrap:wrap;row-gap:8px;}' +
     'body{padding-bottom:110px!important;}';
   document.head.appendChild(style);
+})();
 
-  // 置顶按钮 + 背景快速切换按钮，加进原有功能按钮那一排
-  var hdrBtns = document.querySelector('.hdr-btns');
-  if (hdrBtns) {
-    var pinBtn = document.createElement('button');
-    pinBtn.className = 'icon-btn';
-    pinBtn.title = '窗口置顶';
-    pinBtn.innerHTML = '<span style="font-size:13px;">📌</span>';
-    pinBtn.onclick = async function () {
-      var on = await window.desktopAPI.toggleAlwaysOnTop();
-      pinBtn.classList.toggle('on', on);
-    };
-    hdrBtns.insertBefore(pinBtn, hdrBtns.firstChild);
-    window.desktopAPI.getAlwaysOnTop().then(function (on) { pinBtn.classList.toggle('on', on); });
-    window.desktopAPI.onAlwaysOnTopChanged(function (on) { pinBtn.classList.toggle('on', on); });
+// ── 背景图层 ──
+var bgLayer = document.createElement('div');
+bgLayer.id = 'customBgLayer';
+document.body.insertBefore(bgLayer, document.body.firstChild);
 
-    var bgToggleBtn = document.createElement('button');
-    bgToggleBtn.className = 'icon-btn';
-    bgToggleBtn.title = '切换自定义背景 / 默认背景';
-    bgToggleBtn.innerHTML = '<span style="font-size:13px;">🖼️</span>';
-    bgToggleBtn.onclick = function () {
-      var hasSaved = false;
-      try { hasSaved = !!localStorage.getItem('sg36_bgImg'); } catch (e) {}
-      if (!hasSaved) {
-        var fi = document.getElementById('bgFileInput');
-        if (fi) fi.click();
-        return;
-      }
-      var nowOn = document.body.classList.toggle('custom-bg-on');
-      bgToggleBtn.classList.toggle('on', nowOn);
-      try { localStorage.setItem('sg36_bgOn', nowOn ? '1' : '0'); } catch (e) {}
-    };
-    hdrBtns.insertBefore(bgToggleBtn, hdrBtns.firstChild);
-  }
+var fsOverlayEl = document.getElementById('fsOverlay');
+var fsCustomBgLayer = document.createElement('div');
+fsCustomBgLayer.id = 'fsCustomBgLayer';
+if (fsOverlayEl) fsOverlayEl.insertBefore(fsCustomBgLayer, fsOverlayEl.firstChild);
 
-  // 自定义背景图层（主界面 + 全屏模式各一份，全屏内的用 absolute 定位在 fsOverlay 内部）
-  var bgLayer = document.createElement('div');
-  bgLayer.id = 'customBgLayer';
-  document.body.insertBefore(bgLayer, document.body.firstChild);
+function applyBgImage() {
+  try {
+    var saved = localStorage.getItem('sg36_bgImg');
+    if (!saved) return;
+    var dim = parseInt(localStorage.getItem('sg36_bgDim') || '35');
+    var overlay = 'linear-gradient(rgba(0,0,0,' + (dim/100) + '),rgba(0,0,0,' + (dim/100) + ')),';
+    var bgVal = overlay + 'url(' + saved + ')';
+    bgLayer.style.backgroundImage = bgVal;
+    if (fsCustomBgLayer) fsCustomBgLayer.style.backgroundImage = bgVal;
+    var savedOn = localStorage.getItem('sg36_bgOn');
+    if (savedOn === null || savedOn === '1') document.body.classList.add('custom-bg-on');
+  } catch(e) {}
+}
+function applyBgBlur(v) {
+  bgLayer.style.filter = 'blur(' + v + 'px)';
+  if (fsCustomBgLayer) fsCustomBgLayer.style.filter = 'blur(' + v + 'px)';
+}
+(function loadSavedBg() {
+  try {
+    var blur = localStorage.getItem('sg36_bgBlur');
+    if (blur) applyBgBlur(blur);
+    applyBgImage();
+  } catch(e) {}
+})();
 
-  var fsOverlayEl = document.getElementById('fsOverlay');
-  var fsCustomBgLayer = document.createElement('div');
-  fsCustomBgLayer.id = 'fsCustomBgLayer';
-  if (fsOverlayEl) fsOverlayEl.insertBefore(fsCustomBgLayer, fsOverlayEl.firstChild);
+// ── 动态叠加特效 ──
+var fxCanvas = document.createElement('canvas');
+fxCanvas.id = 'dynFxCanvas';
+document.body.appendChild(fxCanvas);
 
-  function applyBgImage() {
-    try {
-      var saved = localStorage.getItem('sg36_bgImg');
-      if (!saved) return;
-      var dim = parseInt(localStorage.getItem('sg36_bgDim') || '35');
-      var overlay = 'linear-gradient(rgba(0,0,0,' + (dim / 100) + '),rgba(0,0,0,' + (dim / 100) + ')),';
-      var bgVal = overlay + 'url(' + saved + ')';
-      bgLayer.style.backgroundImage = bgVal;
-      if (fsCustomBgLayer) fsCustomBgLayer.style.backgroundImage = bgVal;
-      var savedOn = localStorage.getItem('sg36_bgOn');
-      if (savedOn === null || savedOn === '1') document.body.classList.add('custom-bg-on');
-    } catch (e) {}
-  }
-  function applyBgBlur(v) {
-    bgLayer.style.filter = 'blur(' + v + 'px)';
-    if (fsCustomBgLayer) fsCustomBgLayer.style.filter = 'blur(' + v + 'px)';
-  }
-  (function loadSavedBg() {
-    try {
-      var blur = localStorage.getItem('sg36_bgBlur');
-      if (blur) applyBgBlur(blur);
-      applyBgImage();
-    } catch (e) {}
-  })();
+var fsFxCanvas = document.createElement('canvas');
+fsFxCanvas.id = 'fsDynFxCanvas';
+if (fsOverlayEl) fsOverlayEl.appendChild(fsFxCanvas);
 
-  // ===== 动态叠加特效：星光 / 流星 / 落叶 / 光晕，主界面 + 全屏模式同步 =====
-  var fxCanvas = document.createElement('canvas');
-  fxCanvas.id = 'dynFxCanvas';
-  document.body.insertBefore(fxCanvas, bgLayer.nextSibling);
+var fxCtx = fxCanvas.getContext('2d');
+var fsFxCtx = fsFxCanvas.getContext('2d');
+var fxType = 'none';
+var fxParticles = [];
+var fxTime = 0;
+var meteorTimer = null;
+var thunderNextFlash = 0, thunderBoltLife = 0, thunderBoltPath = [];
 
-  var fsFxCanvas = document.createElement('canvas');
-  fsFxCanvas.id = 'fsDynFxCanvas';
-  if (fsOverlayEl) fsOverlayEl.insertBefore(fsFxCanvas, fsCustomBgLayer.nextSibling);
+function resizeFxCanvas() {
+  fxCanvas.width = window.innerWidth; fxCanvas.height = window.innerHeight;
+  fsFxCanvas.width = window.innerWidth; fsFxCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeFxCanvas);
+resizeFxCanvas();
 
-  var fxCtx = fxCanvas.getContext('2d');
-  var fsFxCtx = fsFxCanvas.getContext('2d');
-  var fxType = 'none';
-  var fxParticles = [];
-  var fxTime = 0;
-  var meteorTimer = null;
-  var thunderNextFlash = 0, thunderBoltLife = 0, thunderBoltPath = [];
-
-  var averEl = document.querySelector('.about-ver');
-  if (averEl) averEl.textContent = 'v3.7 · 2026';
-
-  function resizeFxCanvas() {
-    fxCanvas.width = window.innerWidth; fxCanvas.height = window.innerHeight;
-    fsFxCanvas.width = window.innerWidth; fsFxCanvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resizeFxCanvas);
-  resizeFxCanvas();
-
-  function initFxParticles(type) {
-    fxParticles = [];
-    var W = fxCanvas.width, H = fxCanvas.height;
-    if (type === 'stars') {
-      for (var i = 0; i < 90; i++) fxParticles.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.4 + 0.4, ph: Math.random() * Math.PI * 2, spd: Math.random() * 2 + 1 });
-    } else if (type === 'leaves') {
-      var leafColors = [['#c2410c', '#7c2d12'], ['#b45309', '#78350f'], ['#a16207', '#713f12'], ['#dc2626', '#7f1d1d']];
-      for (var i = 0; i < 20; i++) {
-        var lc = leafColors[Math.floor(Math.random() * leafColors.length)];
-        fxParticles.push({ x: Math.random() * W, y: Math.random() * H, vy: Math.random() * 0.5 + 0.25, sway: Math.random() * Math.PI * 2, swaySpd: Math.random() * 0.018 + 0.008, rot: Math.random() * 360, size: Math.random() * 5 + 7, c1: lc[0], c2: lc[1] });
-      }
-    } else if (type === 'glow') {
-      var hues = ['rgba(167,139,250,', 'rgba(56,189,248,', 'rgba(251,113,133,'];
-      for (var i = 0; i < 3; i++) fxParticles.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 160 + 120, hue: hues[i % 3], ph: Math.random() * Math.PI * 2 });
-    } else if (type === 'snow') {
-      for (var i = 0; i < 70; i++) fxParticles.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 2.2 + 1, sway: Math.random() * Math.PI * 2, swaySpd: Math.random() * 0.015 + 0.005, vy: Math.random() * 0.5 + 0.25 });
-    } else if (type === 'rain2') {
-      for (var i = 0; i < 110; i++) fxParticles.push({ x: Math.random() * W, y: Math.random() * H, len: Math.random() * 16 + 10, vy: Math.random() * 5 + 6 });
-    } else if (type === 'thunder') {
-      for (var i = 0; i < 70; i++) fxParticles.push({ x: Math.random() * W, y: Math.random() * H, len: Math.random() * 14 + 8, vy: Math.random() * 4 + 5 });
-      thunderNextFlash = performance.now() + 2000 + Math.random() * 3000;
-      thunderBoltLife = 0;
-      thunderBoltPath = [];
-    } else if (type === 'heart') {
-      for (var i = 0; i < 18; i++) fxParticles.push({ x: Math.random() * W, y: H + Math.random() * 100, vy: Math.random() * 0.35 + 0.15, sway: Math.random() * Math.PI * 2, swaySpd: Math.random() * 0.02 + 0.008, size: Math.random() * 14 + 14, pulseSpd: Math.random() * 0.003 + 0.002 });
-    }
-  }
-  function scheduleMeteor() {
-    clearTimeout(meteorTimer);
-    if (fxType !== 'meteor') return;
-    meteorTimer = setTimeout(function () {
-      var W = fxCanvas.width;
-      fxParticles.push({ x: Math.random() * W * 0.6 + W * 0.2, y: -20, vx: 2.6, vy: 3.4, trail: [] });
-      scheduleMeteor();
-    }, 1800 + Math.random() * 3200);
-  }
-  function drawFx(cv, ctx) {
-    var W = cv.width, H = cv.height;
-    if (!W) return;
-    ctx.clearRect(0, 0, W, H);
-    if (fxType === 'none') return;
-    if (fxType === 'stars') {
-      fxParticles.forEach(function (s) {
-        var a = 0.35 + 0.55 * Math.sin(fxTime * 0.001 * s.spd + s.ph);
-        ctx.globalAlpha = Math.max(0, a);
-        ctx.fillStyle = '#fff';
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
-      });
-      ctx.globalAlpha = 1;
-    } else if (fxType === 'leaves') {
-      fxParticles.forEach(function (l) {
-        l.y += l.vy; l.sway += l.swaySpd; l.rot += 0.5;
-        var x = l.x + Math.sin(l.sway) * 18;
-        if (l.y > H + 20) { l.y = -20; l.x = Math.random() * W; }
-        ctx.save();
-        ctx.translate(x, l.y);
-        ctx.rotate(l.rot * Math.PI / 180);
-        ctx.filter = 'blur(0.8px)';
-        ctx.globalAlpha = 0.8;
-        var sz = l.size;
-        var grad = ctx.createLinearGradient(0, -sz, 0, sz);
-        grad.addColorStop(0, l.c1);
-        grad.addColorStop(1, l.c2);
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.moveTo(0, -sz);
-        ctx.bezierCurveTo(sz * 0.7, -sz * 0.5, sz * 0.7, sz * 0.5, 0, sz);
-        ctx.bezierCurveTo(-sz * 0.7, sz * 0.5, -sz * 0.7, -sz * 0.5, 0, -sz);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(0,0,0,0.15)';
-        ctx.lineWidth = 0.6;
-        ctx.beginPath(); ctx.moveTo(0, -sz * 0.8); ctx.lineTo(0, sz * 0.8); ctx.stroke();
-        ctx.restore();
-      });
-      ctx.filter = 'none';
-      ctx.globalAlpha = 1;
-    } else if (fxType === 'glow') {
-      fxParticles.forEach(function (g) {
-        var gx = g.x + Math.sin(fxTime * 0.0003 + g.ph) * 60;
-        var gy = g.y + Math.cos(fxTime * 0.00022 + g.ph) * 50;
-        var grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, g.r);
-        grad.addColorStop(0, g.hue + '0.20)');
-        grad.addColorStop(1, g.hue + '0)');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, W, H);
-      });
-    } else if (fxType === 'meteor') {
-      for (var i = fxParticles.length - 1; i >= 0; i--) {
-        var m = fxParticles[i];
-        m.trail.push({ x: m.x, y: m.y });
-        if (m.trail.length > 14) m.trail.shift();
-        m.x += m.vx * 4; m.y += m.vy * 4;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        for (var t = 0; t < m.trail.length; t++) {
-          ctx.globalAlpha = t / m.trail.length * 0.8;
-          ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-          var p = m.trail[t];
-          if (t === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
-        }
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-        if (m.y > H + 30) fxParticles.splice(i, 1);
-      }
-    } else if (fxType === 'snow') {
-      fxParticles.forEach(function (s) {
-        s.y += s.vy; s.sway += s.swaySpd;
-        var x = s.x + Math.sin(s.sway) * 14;
-        if (s.y > H + 6) { s.y = -6; s.x = Math.random() * W; }
-        ctx.globalAlpha = 0.8;
-        ctx.fillStyle = '#fff';
-        ctx.beginPath(); ctx.arc(x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
-      });
-      ctx.globalAlpha = 1;
-    } else if (fxType === 'rain2') {
-      ctx.strokeStyle = 'rgba(180,210,255,0.55)';
-      ctx.lineWidth = 1.2;
-      fxParticles.forEach(function (r) {
-        r.y += r.vy;
-        if (r.y > H + 20) { r.y = -20; r.x = Math.random() * W; }
-        ctx.beginPath();
-        ctx.moveTo(r.x, r.y);
-        ctx.lineTo(r.x - 3, r.y + r.len);
-        ctx.stroke();
-      });
-    } else if (fxType === 'thunder') {
-      ctx.strokeStyle = 'rgba(180,210,255,0.4)';
-      ctx.lineWidth = 1;
-      fxParticles.forEach(function (r) {
-        r.y += r.vy;
-        if (r.y > H + 20) { r.y = -20; r.x = Math.random() * W; }
-        ctx.beginPath();
-        ctx.moveTo(r.x, r.y);
-        ctx.lineTo(r.x - 2, r.y + r.len);
-        ctx.stroke();
-      });
-      var now = performance.now();
-      if (now > thunderNextFlash) {
-        thunderNextFlash = now + 2500 + Math.random() * 5000;
-        thunderBoltLife = 6;
-        var bx = W * 0.2 + Math.random() * W * 0.6, by = 0;
-        thunderBoltPath = [{ x: bx, y: by }];
-        while (by < H * 0.55) {
-          bx += (Math.random() - 0.5) * 46;
-          by += Math.random() * 32 + 18;
-          thunderBoltPath.push({ x: bx, y: by });
-        }
-      }
-      if (thunderBoltLife > 0) {
-        ctx.fillStyle = 'rgba(255,255,255,' + (thunderBoltLife > 4 ? 0.18 : 0.05) + ')';
-        ctx.fillRect(0, 0, W, H);
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        thunderBoltPath.forEach(function (p, i) { if (i === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y); });
-        ctx.stroke();
-        thunderBoltLife--;
-      }
-    } else if (fxType === 'heart') {
-      fxParticles.forEach(function (h) {
-        h.y -= h.vy; h.sway += h.swaySpd;
-        var x = h.x + Math.sin(h.sway) * 16;
-        if (h.y < -30) { h.y = H + 20; h.x = Math.random() * W; }
-        var pulse = 1 + 0.18 * Math.sin(fxTime * h.pulseSpd);
-        ctx.save();
-        ctx.translate(x, h.y);
-        ctx.scale(pulse, pulse);
-        ctx.font = h.size + 'px sans-serif';
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(244,114,182,0.65)';
-        ctx.shadowBlur = 12;
-        ctx.globalAlpha = 0.85;
-        ctx.fillText('💗', 0, 0);
-        ctx.restore();
-      });
-      ctx.globalAlpha = 1;
-      ctx.shadowBlur = 0;
-    }
-  }
-  function fxLoop() {
-    fxTime += 16;
-    drawFx(fxCanvas, fxCtx);
-    if (window.fsOpen) drawFx(fsFxCanvas, fsFxCtx);
-    requestAnimationFrame(fxLoop);
-  }
-  requestAnimationFrame(fxLoop);
-
-  function setFxType(type) {
-    fxType = type;
-    try { localStorage.setItem('sg36_fx', type); } catch (e) {}
-    initFxParticles(type);
-    if (type === 'meteor') scheduleMeteor(); else clearTimeout(meteorTimer);
-  }
-  (function loadSavedFx() {
-    try {
-      var saved = localStorage.getItem('sg36_fx');
-      if (saved) setFxType(saved);
-    } catch (e) {}
-  })();
-
-  // 滚动时短暂显示滚动条，停下后自动隐藏
-  function setupAutoHideScrollbars(selectors) {
-    selectors.forEach(function (sel) {
-      document.querySelectorAll(sel).forEach(function (el) {
-        var timer;
-        el.addEventListener('scroll', function () {
-          el.classList.add('scrolling');
-          clearTimeout(timer);
-          timer = setTimeout(function () { el.classList.remove('scrolling'); }, 900);
-        });
-      });
-    });
-    var htmlTimer;
-    window.addEventListener('scroll', function () {
-      document.documentElement.classList.add('scrolling');
-      clearTimeout(htmlTimer);
-      htmlTimer = setTimeout(function () { document.documentElement.classList.remove('scrolling'); }, 900);
-    }, true);
-  }
-  setupAutoHideScrollbars(['.sp-body', '.tz-list', '.fs-content']);
-
-  // ===== 设置面板追加：透明度 + 自定义背景（含暗化/模糊）+ 动态特效选择 =====
-  var spBody = document.querySelector('.sp-body');
-  if (spBody) {
-    var section = document.createElement('div');
-    section.innerHTML =
-      '<div class="slbl">桌面设置 · Desktop</div>' +
-      '<div class="srow"><div class="srow-lbl">开机自动启动</div>' +
-      '<label class="tog"><input type="checkbox" id="togAutoLaunch"><span class="tog-sl"></span></label></div>' +
-      '<div class="srow" style="flex-direction:column;align-items:stretch;gap:6px;">' +
-      '<div class="srow-lbl">窗口透明度</div>' +
-      '<div class="scale-row"><span style="font-size:11px;color:var(--text3);">30%</span>' +
-      '<input class="scale-slider" type="range" min="30" max="100" step="5" value="100" id="opacitySlider">' +
-      '<span style="font-size:11px;color:var(--text3);">100%</span>' +
-      '<span class="scale-val" id="opacityVal">100%</span></div></div>' +
-
-      '<div class="slbl">自定义背景 · Background</div>' +
-      '<div class="srow"><div class="srow-lbl">选择背景图片</div>' +
-      '<button class="pill" id="bgPickBtn" style="cursor:pointer;">选择文件</button></div>' +
-      '<div class="srow"><div class="srow-lbl">清除自定义背景</div>' +
-      '<button class="pill" id="bgClearBtn" style="cursor:pointer;">清除</button></div>' +
-      '<div class="srow" style="flex-direction:column;align-items:stretch;gap:6px;">' +
-      '<div class="srow-lbl">背景模糊强度</div>' +
-      '<div class="scale-row"><span style="font-size:11px;color:var(--text3);">0</span>' +
-      '<input class="scale-slider" type="range" min="0" max="40" step="1" value="14" id="bgBlurSlider">' +
-      '<span style="font-size:11px;color:var(--text3);">40</span>' +
-      '<span class="scale-val" id="bgBlurVal">14px</span></div></div>' +
-      '<div class="srow" style="flex-direction:column;align-items:stretch;gap:6px;">' +
-      '<div class="srow-lbl">背景暗化强度（改善文字可读性）</div>' +
-      '<div class="scale-row"><span style="font-size:11px;color:var(--text3);">0</span>' +
-      '<input class="scale-slider" type="range" min="0" max="80" step="5" value="35" id="bgDimSlider">' +
-      '<span style="font-size:11px;color:var(--text3);">80</span>' +
-      '<span class="scale-val" id="bgDimVal">35%</span></div></div>' +
-      '<input type="file" id="bgFileInput" accept="image/*" style="display:none;">' +
-
-      '<div class="slbl">动态叠加特效 · Overlay FX</div>' +
-      '<div class="pills" id="fxPills">' +
-      '<div class="pill" data-fx="none">无</div>' +
-      '<div class="pill" data-fx="stars">✨ 星光</div>' +
-      '<div class="pill" data-fx="meteor">🌠 流星</div>' +
-      '<div class="pill" data-fx="leaves">🍂 落叶</div>' +
-      '<div class="pill" data-fx="glow">🌌 光晕</div>' +
-      '<div class="pill" data-fx="snow">❄️ 飘雪</div>' +
-      '<div class="pill" data-fx="rain2">🌧️ 下雨</div>' +
-      '<div class="pill" data-fx="thunder">⚡ 打雷</div>' +
-      '<div class="pill" data-fx="heart">💗 心动</div>' +
-      '</div>';
-    spBody.insertBefore(section, spBody.firstChild);
-
-    window.desktopAPI.getAutoLaunch().then(function (v) {
-      document.getElementById('togAutoLaunch').checked = v;
-    });
-    document.getElementById('togAutoLaunch').addEventListener('change', function () {
-      window.desktopAPI.setAutoLaunch(this.checked);
-    });
-    document.getElementById('opacitySlider').addEventListener('input', function () {
-      var v = parseInt(this.value);
-      document.getElementById('opacityVal').textContent = v + '%';
-      window.desktopAPI.setOpacity(v / 100);
-    });
-
-    var bgBlurSlider = document.getElementById('bgBlurSlider');
-    var bgBlurVal = document.getElementById('bgBlurVal');
-    var bgDimSlider = document.getElementById('bgDimSlider');
-    var bgDimVal = document.getElementById('bgDimVal');
-    try {
-      var savedBlur = localStorage.getItem('sg36_bgBlur');
-      if (savedBlur) { bgBlurSlider.value = savedBlur; bgBlurVal.textContent = savedBlur + 'px'; }
-      var savedDim = localStorage.getItem('sg36_bgDim');
-      if (savedDim) { bgDimSlider.value = savedDim; bgDimVal.textContent = savedDim + '%'; }
-    } catch (e) {}
-
-    document.getElementById('bgPickBtn').addEventListener('click', function () {
-      document.getElementById('bgFileInput').click();
-    });
-    document.getElementById('bgFileInput').addEventListener('change', function (e) {
-      var file = e.target.files[0];
-      if (!file) return;
-      var reader = new FileReader();
-      reader.onload = function (ev) {
-        try {
-          localStorage.setItem('sg36_bgImg', ev.target.result);
-          document.body.classList.add('custom-bg-on');
-          localStorage.setItem('sg36_bgOn', '1');
-          applyBgImage();
-        } catch (err) {
-          alert('图片文件较大，可能无法保存，下次打开软件会恢复默认背景。建议换一张体积小一点的图片。');
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-    document.getElementById('bgClearBtn').addEventListener('click', function () {
-      bgLayer.style.backgroundImage = '';
-      fsCustomBgLayer.style.backgroundImage = '';
-      document.body.classList.remove('custom-bg-on');
-      try { localStorage.removeItem('sg36_bgImg'); localStorage.removeItem('sg36_bgOn'); } catch (e) {}
-    });
-    bgBlurSlider.addEventListener('input', function () {
-      var v = parseInt(this.value);
-      bgBlurVal.textContent = v + 'px';
-      applyBgBlur(v);
-      try { localStorage.setItem('sg36_bgBlur', v); } catch (e) {}
-    });
-    bgDimSlider.addEventListener('input', function () {
-      var v = parseInt(this.value);
-      bgDimVal.textContent = v + '%';
-      try { localStorage.setItem('sg36_bgDim', v); } catch (e) {}
-      applyBgImage();
-    });
-
-    var fxPills = document.querySelectorAll('#fxPills .pill');
-    function syncFxPills() {
-      var cur = 'none';
-      try { cur = localStorage.getItem('sg36_fx') || 'none'; } catch (e) {}
-      fxPills.forEach(function (p) { p.classList.toggle('on', p.dataset.fx === cur); });
-    }
-    fxPills.forEach(function (p) {
-      p.addEventListener('click', function () {
-        setFxType(p.dataset.fx);
-        syncFxPills();
-      });
-    });
-    syncFxPills();
+function initFxParticles(type) {
+  fxParticles = [];
+  var W = fxCanvas.width, H = fxCanvas.height;
+  if (type === 'stars') {
+    for (var i = 0; i < 90; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.4+0.4, ph: Math.random()*Math.PI*2, spd: Math.random()*2+1 });
+  } else if (type === 'leaves') {
+    var lc = [['#c2410c','#7c2d12'],['#b45309','#78350f'],['#a16207','#713f12'],['#dc2626','#7f1d1d']];
+    for (var i = 0; i < 20; i++) { var c = lc[Math.floor(Math.random()*lc.length)]; fxParticles.push({ x: Math.random()*W, y: Math.random()*H, vy: Math.random()*0.8+0.6, sway: Math.random()*Math.PI*2, swaySpd: Math.random()*0.022+0.012, rot: Math.random()*360, rotSpd: Math.random()*1.2+0.4, size: Math.random()*5+7, c1: c[0], c2: c[1] }); }
+  } else if (type === 'glow') {
+    var hues = ['rgba(167,139,250,','rgba(56,189,248,','rgba(251,113,133,'];
+    for (var i = 0; i < 3; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*160+120, hue: hues[i%3], ph: Math.random()*Math.PI*2 });
+  } else if (type === 'snow') {
+    for (var i = 0; i < 70; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*2.2+1, sway: Math.random()*Math.PI*2, swaySpd: Math.random()*0.015+0.005, vy: Math.random()*0.5+0.25 });
+  } else if (type === 'rain2') {
+    for (var i = 0; i < 110; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, len: Math.random()*16+10, vy: Math.random()*5+6 });
+  } else if (type === 'thunder') {
+    for (var i = 0; i < 70; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, len: Math.random()*14+8, vy: Math.random()*4+5 });
+    thunderNextFlash = performance.now() + 2000 + Math.random()*3000;
+    thunderBoltLife = 0; thunderBoltPath = [];
+  } else if (type === 'heart') {
+    for (var i = 0; i < 18; i++) fxParticles.push({ x: Math.random()*W, y: H+Math.random()*100, vy: Math.random()*0.35+0.15, sway: Math.random()*Math.PI*2, swaySpd: Math.random()*0.02+0.008, size: Math.random()*14+14, pulseSpd: Math.random()*0.003+0.002 });
+  } else if (type === 'meteor') {
+    scheduleMeteor();
   }
 }
+function scheduleMeteor() {
+  clearTimeout(meteorTimer);
+  if (fxType !== 'meteor') return;
+  meteorTimer = setTimeout(function() {
+    var W = fxCanvas.width;
+    fxParticles.push({ x: Math.random()*W*0.6+W*0.2, y: -20, vx: 2.6, vy: 3.4, trail: [] });
+    scheduleMeteor();
+  }, 1800 + Math.random()*3200);
+}
+function drawFx(cv, ctx) {
+  var W = cv.width, H = cv.height;
+  if (!W) return;
+  ctx.clearRect(0, 0, W, H);
+  if (fxType === 'none') return;
+  if (fxType === 'stars') {
+    fxParticles.forEach(function(s) {
+      var a = 0.35 + 0.55*Math.sin(fxTime*0.001*s.spd+s.ph);
+      ctx.globalAlpha = Math.max(0, a); ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  } else if (fxType === 'leaves') {
+    fxParticles.forEach(function(l) {
+      l.y += l.vy; l.sway += l.swaySpd; l.rot += (l.rotSpd||0.8);
+      var x = l.x + Math.sin(l.sway)*18;
+      if (l.y > H+20) { l.y = -20; l.x = Math.random()*W; }
+      ctx.save(); ctx.translate(x, l.y); ctx.rotate(l.rot*Math.PI/180);
+      ctx.globalAlpha = 0.82;
+      var sz = l.size, grad = ctx.createLinearGradient(0,-sz,0,sz);
+      grad.addColorStop(0, l.c1); grad.addColorStop(1, l.c2);
+      ctx.fillStyle = grad; ctx.beginPath();
+      ctx.moveTo(0,-sz); ctx.bezierCurveTo(sz*0.7,-sz*0.5,sz*0.7,sz*0.5,0,sz); ctx.bezierCurveTo(-sz*0.7,sz*0.5,-sz*0.7,-sz*0.5,0,-sz); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 0.6;
+      ctx.beginPath(); ctx.moveTo(0,-sz*0.8); ctx.lineTo(0,sz*0.8); ctx.stroke();
+      ctx.restore();
+    });
+    ctx.globalAlpha = 1;
+  } else if (fxType === 'glow') {
+    fxParticles.forEach(function(g) {
+      var gx = g.x+Math.sin(fxTime*0.0003+g.ph)*60, gy = g.y+Math.cos(fxTime*0.00022+g.ph)*50;
+      var grad = ctx.createRadialGradient(gx,gy,0,gx,gy,g.r);
+      grad.addColorStop(0, g.hue+'0.20)'); grad.addColorStop(1, g.hue+'0)');
+      ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
+    });
+  } else if (fxType === 'meteor') {
+    for (var i = fxParticles.length-1; i >= 0; i--) {
+      var m = fxParticles[i];
+      m.trail.push({x:m.x,y:m.y}); if (m.trail.length > 14) m.trail.shift();
+      m.x += m.vx*4; m.y += m.vy*4;
+      ctx.lineWidth = 2; ctx.beginPath();
+      for (var t = 0; t < m.trail.length; t++) {
+        ctx.globalAlpha = t/m.trail.length*0.8; ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+        var p = m.trail[t]; if (t===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y);
+      }
+      ctx.stroke(); ctx.globalAlpha = 1;
+      if (m.y > H+30) fxParticles.splice(i,1);
+    }
+  } else if (fxType === 'snow') {
+    fxParticles.forEach(function(s) {
+      s.y += s.vy; s.sway += s.swaySpd;
+      var x = s.x+Math.sin(s.sway)*14;
+      if (s.y > H+6) { s.y = -6; s.x = Math.random()*W; }
+      ctx.globalAlpha = 0.8; ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  } else if (fxType === 'rain2') {
+    ctx.strokeStyle = 'rgba(180,210,255,0.55)'; ctx.lineWidth = 1.2;
+    fxParticles.forEach(function(r) {
+      r.y += r.vy; if (r.y > H+20) { r.y = -20; r.x = Math.random()*W; }
+      ctx.beginPath(); ctx.moveTo(r.x,r.y); ctx.lineTo(r.x-3,r.y+r.len); ctx.stroke();
+    });
+  } else if (fxType === 'thunder') {
+    ctx.strokeStyle = 'rgba(180,210,255,0.4)'; ctx.lineWidth = 1;
+    fxParticles.forEach(function(r) {
+      r.y += r.vy; if (r.y > H+20) { r.y = -20; r.x = Math.random()*W; }
+      ctx.beginPath(); ctx.moveTo(r.x,r.y); ctx.lineTo(r.x-2,r.y+r.len); ctx.stroke();
+    });
+    var now = performance.now();
+    if (now > thunderNextFlash) {
+      thunderNextFlash = now + 2500 + Math.random()*5000;
+      thunderBoltLife = 6;
+      var bx = W*0.2+Math.random()*W*0.6, by = 0;
+      thunderBoltPath = [{x:bx,y:by}];
+      while (by < H*0.55) { bx += (Math.random()-0.5)*46; by += Math.random()*32+18; thunderBoltPath.push({x:bx,y:by}); }
+    }
+    if (thunderBoltLife > 0) {
+      ctx.fillStyle = 'rgba(255,255,255,'+(thunderBoltLife>4?0.18:0.05)+')'; ctx.fillRect(0,0,W,H);
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath();
+      thunderBoltPath.forEach(function(p,i){ if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
+      ctx.stroke(); thunderBoltLife--;
+    }
+  } else if (fxType === 'heart') {
+    fxParticles.forEach(function(h) {
+      h.y -= h.vy; h.sway += h.swaySpd;
+      var x = h.x+Math.sin(h.sway)*16;
+      if (h.y < -30) { h.y = H+20; h.x = Math.random()*W; }
+      var pulse = 1+0.18*Math.sin(fxTime*h.pulseSpd);
+      ctx.save(); ctx.translate(x,h.y); ctx.scale(pulse,pulse);
+      ctx.font = h.size+'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.shadowColor = 'rgba(244,114,182,0.65)'; ctx.shadowBlur = 12; ctx.globalAlpha = 0.85;
+      ctx.fillText('💗',0,0); ctx.restore();
+    });
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+  }
+}
+function fxLoop() {
+  fxTime += 16;
+  drawFx(fxCanvas, fxCtx);
+  if (window.fsOpen) drawFx(fsFxCanvas, fsFxCtx);
+  requestAnimationFrame(fxLoop);
+}
+requestAnimationFrame(fxLoop);
+
+function setFxType(type) {
+  fxType = type;
+  try { localStorage.setItem('sg36_fx', type); } catch(e) {}
+  initFxParticles(type);
+  if (type === 'meteor') scheduleMeteor(); else clearTimeout(meteorTimer);
+}
+(function loadSavedFx() {
+  try { var saved = localStorage.getItem('sg36_fx'); if (saved) setFxType(saved); } catch(e) {}
+})();
+
+// ── 自动隐藏滚动条 ──
+(function setupScrollbars() {
+  ['.sp-body','.tz-list','.fs-content'].forEach(function(sel) {
+    document.querySelectorAll(sel).forEach(function(el) {
+      var timer;
+      el.addEventListener('scroll', function() {
+        el.classList.add('scrolling'); clearTimeout(timer);
+        timer = setTimeout(function(){ el.classList.remove('scrolling'); }, 900);
+      });
+    });
+  });
+})();
+
+// ── 在设置面板追加：自定义背景 + 动态特效 ──
+(function addBgHeaderBtn() {
+  // 在顶部按钮栏加"自定义背景切换"快捷按钮
+  var hdrBtns = document.querySelector('.hdr-btns');
+  if (!hdrBtns) return;
+  var bgBtn = document.createElement('button');
+  bgBtn.className = 'icon-btn';
+  bgBtn.id = 'hdrBgBtn';
+  bgBtn.title = '切换自定义背景';
+  bgBtn.innerHTML = '<span style="font-size:13px;">🖼️</span>';
+  bgBtn.onclick = function() {
+    try {
+      var hasSaved = !!localStorage.getItem('sg36_bgImg');
+      if (!hasSaved) {
+        // 没有背景图就触发选择
+        var fi = document.getElementById('bgFileInput');
+        if (fi) { fi.click(); return; }
+      }
+    } catch(e) {}
+    var on = document.body.classList.toggle('custom-bg-on');
+    bgBtn.classList.toggle('on', on);
+    try { localStorage.setItem('sg36_bgOn', on ? '1' : '0'); } catch(e) {}
+  };
+  // 同步初始状态
+  setTimeout(function() {
+    bgBtn.classList.toggle('on', document.body.classList.contains('custom-bg-on'));
+  }, 200);
+  hdrBtns.insertBefore(bgBtn, hdrBtns.firstChild);
+})();
+
+(function buildSettingsSection() {
+  var spBody = document.querySelector('.sp-body');
+  if (!spBody) return;
+
+  var section = document.createElement('div');
+  section.innerHTML =
+    '<div class="slbl">自定义背景 · Background</div>' +
+    '<div class="srow"><div class="srow-lbl">选择背景图片</div>' +
+    '<button class="pill" id="bgPickBtn" style="cursor:pointer;">选择文件</button></div>' +
+    '<div class="srow"><div class="srow-lbl">切换 / 清除背景</div>' +
+    '<button class="pill" id="bgToggleBtn" style="cursor:pointer;">切换</button>' +
+    '<button class="pill" id="bgClearBtn" style="cursor:pointer;margin-left:6px;">清除</button></div>' +
+    '<div class="srow" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+    '<div class="srow-lbl">背景模糊强度</div>' +
+    '<div class="scale-row"><span style="font-size:11px;color:var(--text3);">0</span>' +
+    '<input class="scale-slider" type="range" min="0" max="40" step="1" value="14" id="bgBlurSlider">' +
+    '<span style="font-size:11px;color:var(--text3);">40</span>' +
+    '<span class="scale-val" id="bgBlurVal">14px</span></div></div>' +
+    '<div class="srow" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+    '<div class="srow-lbl">背景暗化强度</div>' +
+    '<div class="scale-row"><span style="font-size:11px;color:var(--text3);">0</span>' +
+    '<input class="scale-slider" type="range" min="0" max="80" step="5" value="35" id="bgDimSlider">' +
+    '<span style="font-size:11px;color:var(--text3);">80</span>' +
+    '<span class="scale-val" id="bgDimVal">35%</span></div></div>' +
+    '<input type="file" id="bgFileInput" accept="image/*" style="display:none;">' +
+
+    '<div class="slbl">动态叠加特效 · Overlay FX</div>' +
+    '<div class="pills" id="fxPills">' +
+    '<div class="pill" data-fx="none">无</div>' +
+    '<div class="pill" data-fx="stars">✨ 星光</div>' +
+    '<div class="pill" data-fx="meteor">🌠 流星</div>' +
+    '<div class="pill" data-fx="leaves">🍂 落叶</div>' +
+    '<div class="pill" data-fx="glow">🌌 光晕</div>' +
+    '<div class="pill" data-fx="snow">❄️ 飘雪</div>' +
+    '<div class="pill" data-fx="rain2">🌧️ 下雨</div>' +
+    '<div class="pill" data-fx="thunder">⚡ 打雷</div>' +
+    '<div class="pill" data-fx="heart">💗 心动</div>' +
+    '</div>';
+  spBody.insertBefore(section, spBody.firstChild);
+
+  // 背景图片选取
+  document.getElementById('bgPickBtn').addEventListener('click', function() {
+    document.getElementById('bgFileInput').click();
+  });
+  document.getElementById('bgFileInput').addEventListener('change', function(e) {
+    var file = e.target.files[0]; if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        localStorage.setItem('sg36_bgImg', ev.target.result);
+        localStorage.setItem('sg36_bgOn', '1');
+        document.body.classList.add('custom-bg-on');
+        var hb = document.getElementById('hdrBgBtn'); if(hb) hb.classList.add('on');
+        applyBgImage();
+      } catch(err) {
+        alert('图片较大，建议使用体积更小的图片（建议500KB以内）。');
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+  // 切换背景
+  document.getElementById('bgToggleBtn').addEventListener('click', function() {
+    var on = document.body.classList.toggle('custom-bg-on');
+    try { localStorage.setItem('sg36_bgOn', on ? '1' : '0'); } catch(e) {}
+  });
+  // 清除背景
+  document.getElementById('bgClearBtn').addEventListener('click', function() {
+    bgLayer.style.backgroundImage = '';
+    if (fsCustomBgLayer) fsCustomBgLayer.style.backgroundImage = '';
+    document.body.classList.remove('custom-bg-on');
+    try { localStorage.removeItem('sg36_bgImg'); localStorage.removeItem('sg36_bgOn'); } catch(e) {}
+  });
+  // 模糊
+  var bgBlurSlider = document.getElementById('bgBlurSlider');
+  var bgBlurVal = document.getElementById('bgBlurVal');
+  try { var sv = localStorage.getItem('sg36_bgBlur'); if (sv) { bgBlurSlider.value = sv; bgBlurVal.textContent = sv+'px'; } } catch(e) {}
+  bgBlurSlider.addEventListener('input', function() {
+    var v = parseInt(this.value); bgBlurVal.textContent = v+'px';
+    applyBgBlur(v); try { localStorage.setItem('sg36_bgBlur', v); } catch(e) {}
+  });
+  // 暗化
+  var bgDimSlider = document.getElementById('bgDimSlider');
+  var bgDimVal = document.getElementById('bgDimVal');
+  try { var sd = localStorage.getItem('sg36_bgDim'); if (sd) { bgDimSlider.value = sd; bgDimVal.textContent = sd+'%'; } } catch(e) {}
+  bgDimSlider.addEventListener('input', function() {
+    var v = parseInt(this.value); bgDimVal.textContent = v+'%';
+    try { localStorage.setItem('sg36_bgDim', v); } catch(e) {}
+    applyBgImage();
+  });
+  // 特效选择
+  var fxPills = document.querySelectorAll('#fxPills .pill');
+  function syncFxPills() {
+    var cur = 'none'; try { cur = localStorage.getItem('sg36_fx') || 'none'; } catch(e) {}
+    fxPills.forEach(function(p){ p.classList.toggle('on', p.dataset.fx === cur); });
+  }
+  fxPills.forEach(function(p) {
+    p.addEventListener('click', function() { setFxType(p.dataset.fx); syncFxPills(); });
+  });
+  syncFxPills();
+})();
 </script>
 </html>
