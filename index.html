@@ -183,7 +183,7 @@ option{background:#160e3a;}
 .conv-fmt-bar{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap;}
 .conv-fmt-pill{padding:3px 10px;border-radius:20px;font-size:calc(11px * var(--fs));cursor:pointer;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);color:var(--text3);transition:all .2s;}
 .conv-fmt-pill.on{background:color-mix(in srgb,var(--accent) 18%,transparent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent);}
-.conv-results{display:flex;flex-direction:column;gap:5px;}
+.conv-results{display:flex;flex-direction:column;gap:5px;}.conv-row-v2{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-left:3px solid transparent;margin-bottom:5px;}.conv-row-v2.ahead{border-left-color:#34d399;}.conv-row-v2.same{border-left-color:#38bdf8;}.conv-row-v2.behind{border-left-color:#fb7185;}.conv-flag-circle{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}.conv-row-main{flex:1;min-width:0;}.conv-row-title{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}.conv-row-country{font-size:calc(13px * var(--fs));font-weight:600;color:#fff;}.conv-row-city{font-size:calc(12px * var(--fs));color:var(--text3);}.conv-base-badge{font-size:calc(9px * var(--fs));padding:1px 6px;border-radius:10px;background:color-mix(in srgb,var(--accent) 30%,transparent);color:var(--accent);}.conv-row-meta{font-size:calc(11px * var(--fs));color:var(--text3);margin-top:2px;}.conv-row-time-block{text-align:right;flex-shrink:0;}.conv-row-time-main{font-size:calc(15px * var(--fs));font-weight:700;color:#fff;white-space:nowrap;}.conv-row-time-sub{font-size:calc(10px * var(--fs));color:var(--text3);margin-top:1px;white-space:nowrap;}.conv-legend{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 10px;padding:7px 10px;background:rgba(255,255,255,.03);border-radius:10px;font-size:calc(10px * var(--fs));color:var(--text3);}.conv-legend-item{display:flex;align-items:center;gap:5px;}.conv-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}.conv-base-line{font-size:calc(11px * var(--fs));color:var(--text2);margin-bottom:8px;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:10px;}.conv-copy-wrap{text-align:right;margin-bottom:8px;}.conv-copy-pill{padding:5px 12px;border-radius:20px;background:color-mix(in srgb,var(--accent) 20%,transparent);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent);font-family:var(--font);font-size:calc(11px * var(--fs));font-weight:500;cursor:pointer;transition:all .2s;}.conv-copy-pill:hover{background:color-mix(in srgb,var(--accent) 32%,transparent);}.conv-row-diff-col{width:80px;flex-shrink:0;text-align:right;font-size:calc(11px * var(--fs));font-weight:600;}.conv-row-diff-col.ahead{color:#34d399;}.conv-row-diff-col.same{color:#38bdf8;}.conv-row-diff-col.behind{color:#fb7185;}.conv-close-bottom{display:none!important;}
 .conv-row{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:8px 12px;}
 .conv-row.hl{background:color-mix(in srgb,var(--accent) 10%,transparent);border-color:color-mix(in srgb,var(--accent) 28%,transparent);}
 .conv-row-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor;}
@@ -569,7 +569,7 @@ body.skin-starfield .fs-stars{display:block;}
         <div class="about-row"><div class="about-row-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="about-row-key" id="aboutLicense">&#35768;&#21487;</span><span class="about-row-val">MIT License</span></div>
         <div class="about-row"><div class="about-row-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><span class="about-row-key" id="aboutData">&#25968;&#25454;</span><span class="about-row-val">IANA Timezone DB</span></div>
       </div>
-      <div class="about-ver">v3.6 &#183; 2026</div>
+      <div class="about-ver">v3.8 &#183; 2026</div>
     </div>
   </div>
 </div>
@@ -1085,9 +1085,13 @@ checkDST();tick();setInterval(tick,1000);
 <div id="floatBtns">
   <a class="float-btn github-btn" href="https://github.com/JaminFX/shiguang-world-clock" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5 5 0 0 0 20 4.77 4.92 4.92 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A4.92 4.92 0 0 0 5 4.77a5 5 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-    GitHub
+    Desktop App
   </a>
-  <a class="float-btn dl-btn" href="https://github.com/JaminFX/shiguang-world-clock/releases/download/v3.7.0/Shiguang.Setup.3.7.0.exe" target="_blank" rel="noopener">
+  <a class="float-btn github-btn" href="https://github.com/JaminFX/shiguang-clock-web" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5 5 0 0 0 20 4.77 4.92 4.92 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A4.92 4.92 0 0 0 5 4.77a5 5 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    Web Source
+  </a>
+  <a class="float-btn dl-btn" href="https://github.com/JaminFX/shiguang-world-clock/releases/download/v3.8.0/Shiguang.Setup.3.8.0.exe" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Windows Setup
   </a>
@@ -1743,9 +1747,144 @@ function mpSyncFsCanvas(){
   else{fc.style.opacity='0';}
 }
 
+// ── 时间转换面板升级 ──
+function upgradeConverterUI() {
+    if (document.getElementById('convBaseLine')) return; // 防止脚本重复插入导致内容重复
+    var card = document.getElementById('converterCard');
+    var fmtBarEl = document.getElementById('convFmtBar');
+    var resultsEl = document.getElementById('convResults');
+    if (!card || !fmtBarEl || !resultsEl) return;
+
+    var headerTitleEl = document.getElementById('convTitleEl');
+    if (headerTitleEl) {
+      headerTitleEl.insertAdjacentHTML('beforebegin',
+        '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));margin-right:8px;font-size:12px;flex-shrink:0;">🕐</span>');
+    }
+
+    // "从" 改成"基准时区"，并同步修改语言字典，避免以后切换语言又被改回去
+    if (typeof I18N !== 'undefined' && I18N.zh) I18N.zh.convFrom = '基准时区';
+    var fromLbl = document.getElementById('convFromLbl');
+    if (fromLbl) fromLbl.textContent = '基准时区';
+
+    var baseLine = document.createElement('div');
+    baseLine.className = 'conv-base-line';
+    baseLine.id = 'convBaseLine';
+    fmtBarEl.insertAdjacentElement('afterend', baseLine);
+
+    var legend = document.createElement('div');
+    legend.className = 'conv-legend';
+    legend.innerHTML =
+      '<span class="conv-legend-item"><span class="conv-legend-dot" style="background:#34d399;"></span>快于基准时间</span>' +
+      '<span class="conv-legend-item"><span class="conv-legend-dot" style="background:#38bdf8;"></span>与基准时间相同</span>' +
+      '<span class="conv-legend-item"><span class="conv-legend-dot" style="background:#fb7185;"></span>慢于基准时间</span>';
+    baseLine.insertAdjacentElement('afterend', legend);
+
+    // 复制按钮：挪到"换算"按钮旁边，改小
+    var convertBtnEl = document.getElementById('convBtnEl');
+    var copyBtn = document.createElement('button');
+    copyBtn.className = 'conv-action-btn';
+    copyBtn.style.marginLeft = '6px';
+    copyBtn.textContent = '📋 复制';
+    copyBtn.onclick = function () {
+      var text = window.__convCopyText || '';
+      if (navigator.clipboard && text) {
+        navigator.clipboard.writeText(text).then(function () {
+          copyBtn.textContent = '✅ 已复制';
+          setTimeout(function () { copyBtn.textContent = '📋 复制'; }, 1500);
+        }).catch(function () {});
+      }
+    };
+    if (convertBtnEl && convertBtnEl.parentElement) {
+      convertBtnEl.insertAdjacentElement('afterend', copyBtn);
+    }
+
+    var closeBottomBtn = document.createElement('button');
+    closeBottomBtn.className = 'conv-close-bottom';
+    closeBottomBtn.innerHTML = '✕ 关闭窗口';
+    closeBottomBtn.onclick = function () { if (typeof window.toggleConverter === 'function') window.toggleConverter(); };
+    resultsEl.insertAdjacentElement('afterend', closeBottomBtn);
+
+    var CIRCLE_COLOR_MAP = { ahead: '#1d8f63', same: '#1f7fa3', behind: '#c23c54' };
+
+    window.renderConvResults = function () {
+      var fromTz = document.getElementById('convFromTz').value;
+      var tv = (document.getElementById('convTimeInput').value || '12:00').split(':');
+      var hh = parseInt(tv[0]), mm = parseInt(tv[1]);
+      var fromOff = getOffsetMin(fromTz);
+      var baseMin = hh * 60 + mm - fromOff;
+      var fromClk = tzObj(fromTz);
+
+      if (fromClk) {
+        var bd = new Date(); bd.setHours(hh, mm, 0, 0);
+        var baseTimeStr = S.convFmt === '24h' ? fmt24(bd, false) : fmt12(bd, false);
+        baseLine.innerHTML = '基准时间：' + fromClk.fl + ' ' + cName(fromClk) + '，' + ctName(fromClk) +
+          '　' + baseTimeStr + '　' + fmtDate(localD(fromTz), S.dateFmt);
+      }
+
+      resultsEl.innerHTML = '';
+      var clks = getClocks();
+      var copyLines = [];
+
+      clks.forEach(function (clk) {
+        var toOff = getOffsetMin(clk.tz);
+        var m = baseMin + toOff, dayOff = 0;
+        while (m < 0) { m += 1440; dayOff--; }
+        while (m >= 1440) { m -= 1440; dayOff++; }
+        var rDate = new Date(); rDate.setHours(Math.floor(m / 60), m % 60, 0, 0);
+        var ts;
+        if (S.convFmt === '12h') ts = fmt12(rDate, false);
+        else if (S.convFmt === '24h') ts = fmt24(rDate, false);
+        else ts = fmt12(rDate, false) + ' / ' + fmt24(rDate, false);
+
+        var diffMin = toOff - fromOff;
+        var diffLabel, cls;
+        if (diffMin === 0) { diffLabel = '时间相同'; cls = 'same'; }
+        else {
+          var ab = Math.abs(diffMin), dh = Math.floor(ab / 60), dm2 = ab % 60;
+          diffLabel = (diffMin > 0 ? '快 ' : '慢 ') + (dh ? dh + '小时' : '') + (dm2 ? dm2 + '分钟' : '');
+          cls = diffMin > 0 ? 'ahead' : 'behind';
+        }
+        var dayStr = dayOff === 0 ? '' : (dayOff > 0 ? '（明天）' : '（昨天）');
+        var dateForRow = new Date();
+        dateForRow.setDate(dateForRow.getDate() + dayOff);
+        var dateLine = fmtDate(dateForRow, S.dateFmt);
+
+        var abbr = '';
+        try {
+          var parts = new Intl.DateTimeFormat('en-US', { timeZone: clk.tz, timeZoneName: 'short' }).formatToParts(new Date());
+          var pFound = parts.find(function (x) { return x.type === 'timeZoneName'; });
+          abbr = pFound ? pFound.value : '';
+        } catch (e) {}
+
+        var circleColor = CIRCLE_COLOR_MAP[cls] || '#555';
+
+        var row = document.createElement('div');
+        row.className = 'conv-row-v2 ' + cls;
+        row.innerHTML =
+          '<div class="conv-flag-circle" style="background:' + circleColor + ';color:#fff;font-weight:700;font-size:11px;">' + clk.cc + '</div>' +
+          '<div class="conv-row-main">' +
+          '<div class="conv-row-title"><span class="conv-row-country">' + ctName(clk) + '</span><span class="conv-row-city">' + cName(clk) + '</span>' +
+          (clk.tz === fromTz ? '<span class="conv-base-badge">基准时间</span>' : '') + '</div>' +
+          '<div class="conv-row-meta">' + abbr + '</div></div>' +
+          '<div class="conv-row-time-block"><div class="conv-row-time-main">' + ts + '</div>' +
+          '<div class="conv-row-time-sub">' + dateLine + (dayStr ? ' ' + dayStr : '') + '</div></div>' +
+          '<div class="conv-row-diff-col ' + cls + '">' + diffLabel + '</div>';
+        resultsEl.appendChild(row);
+
+        copyLines.push(ctName(clk) + ' ' + cName(clk) + '：' + ts + (dayStr ? ' ' + dayStr : ''));
+      });
+
+      window.__convCopyText = copyLines.join('\n');
+    };
+
+    if (typeof window.convOpen !== 'undefined' && window.convOpen) window.renderConvResults();
+}
+setTimeout(upgradeConverterUI, 400);
 // ── 初始化 ──
 mpBuildList();
 mpUpdateUI();
+
+
 </script>
 </body>
 <script>
