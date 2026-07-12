@@ -417,7 +417,7 @@ body.skin-starfield .fs-stars{display:block;}
   </div>
   <div class="glass widget-card">
     <div class="widget-header">
-      <div class="widget-brand"><span class="brand-zh">&#26102;&#20809;</span><span class="brand-en">SHIGUANG</span></div>
+      <div class="widget-brand"><span class="brand-zh" id="brandZh">&#26102;&#20809;</span><span class="brand-en" id="brandEn">SHIGUANG</span></div>
       <div class="hdr-btns">
         <button class="icon-btn" id="langBtn" onclick="toggleLang()" title="Language"><span style="font-size:10px;font-weight:700;" id="langLabel">EN</span></button>
         <button class="icon-btn timefmt-btn" id="timeFmtQuickBtn" onclick="cycleTimeFmt()" title="Time format">12H</button>
@@ -569,7 +569,7 @@ body.skin-starfield .fs-stars{display:block;}
         <div class="about-row"><div class="about-row-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="about-row-key" id="aboutLicense">&#35768;&#21487;</span><span class="about-row-val">MIT License</span></div>
         <div class="about-row"><div class="about-row-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><span class="about-row-key" id="aboutData">&#25968;&#25454;</span><span class="about-row-val">IANA Timezone DB</span></div>
       </div>
-      <div class="about-ver">v3.8 &#183; 2026</div>
+      <div class="about-ver">v3.6 &#183; 2026</div>
     </div>
   </div>
 </div>
@@ -1880,6 +1880,29 @@ function upgradeConverterUI() {
     if (typeof window.convOpen !== 'undefined' && window.convOpen) window.renderConvResults();
 }
 setTimeout(upgradeConverterUI, 400);
+// ── 彩蛋：连续三击 ──
+(function(){
+  function makeTripleClick(el, url){
+    var count = 0, timer = null;
+    el.style.cursor = 'default';
+    el.addEventListener('click', function(){
+      count++;
+      clearTimeout(timer);
+      timer = setTimeout(function(){ count = 0; }, 600);
+      if(count >= 3){
+        count = 0;
+        window.open(url, '_blank');
+      }
+    });
+  }
+  setTimeout(function(){
+    var zh = document.getElementById('brandZh');
+    var en = document.getElementById('brandEn');
+    if(zh) makeTripleClick(zh, 'https://www.youtube.com/watch?v=Yb5I-8AbK6U');
+    if(en) makeTripleClick(en, 'https://www.youtube.com/watch?v=gP9NDK0Tq_4');
+  }, 500);
+})();
+
 // ── 初始化 ──
 mpBuildList();
 mpUpdateUI();
