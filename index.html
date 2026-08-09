@@ -147,10 +147,21 @@ body.skin-starfield .icon-btn.on{background:rgba(165,180,252,.18);border-color:r
 .clock-item.dst-today{border-color:rgba(192,132,252,.5);background:rgba(192,132,252,.08);}
 .clock-item.dragging{opacity:.4;}
 .clock-item.drag-over{border-color:var(--accent);transform:scale(1.012);}
+
 .drag-handle{width:20px;height:100%;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:grab;flex-shrink:0;opacity:0;transition:opacity .2s;}
 .clock-item:hover .drag-handle{opacity:1;}
 .drag-handle span{display:block;width:12px;height:1.5px;background:rgba(255,255,255,.32);border-radius:2px;}
-.cdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;box-shadow:0 0 7px currentColor;}
+.cdot{width:4px;height:30px;border-radius:3px;flex-shrink:0;box-shadow:0 0 8px currentColor;}
+.cdot.dot-classic{width:6px;height:6px;box-shadow:0 0 7px currentColor;}
+.ccode-pin{width:28px;height:28px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;letter-spacing:.3px;}
+.ctutc{flex-shrink:0;font-size:calc(11px * var(--fs));font-weight:800;color:rgba(255,255,255,.85);margin-left:12px;padding-left:12px;border-left:1px solid rgba(255,255,255,.1);white-space:nowrap;}
+.main-footer-bar{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.78);}
+.mfb-count{display:flex;align-items:center;gap:5px;}
+.mfb-sync{display:flex;align-items:center;gap:6px;}
+.mfb-refresh-btn{width:20px;height:20px;border-radius:50%;border:none;background:rgba(255,255,255,.06);color:var(--text3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.mfb-refresh-btn:hover{background:rgba(167,139,250,.22);color:#fff;}
+.mfb-refresh-btn.spinning svg{animation:mfbSpin .6s linear;}
+@keyframes mfbSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 .cinfo{flex:1;min-width:0;}
 .cname-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .ccountry-main{font-size:calc(14px * var(--fs));font-weight:600;color:var(--text1);white-space:nowrap;}
@@ -437,6 +448,18 @@ body.skin-starfield .fs-stars{display:block;}
       <div class="primary-date" id="primaryDate">-</div>
     </div>
     <div class="clocks-grid" id="clocksGrid"></div>
+    <div class="main-footer-bar">
+      <div class="mfb-count">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.4-7-11.5A7 7 0 0 1 19 9.5C19 14.6 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+        <span id="mfbCount">-</span>
+      </div>
+      <div class="mfb-sync">
+        <span id="mfbSyncTime">-</span>
+        <button class="mfb-refresh-btn" id="mfbRefreshBtn" onclick="manualSyncRefresh()" title="Refresh">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </button>
+      </div>
+    </div>
   </div>
   <div class="glass converter-card" id="converterCard" style="display:none;">
     <div class="conv-header"><span class="conv-title-text" id="convTitleEl">TIME CONVERTER</span><button class="conv-close" onclick="toggleConverter()">&#215;</button></div>
@@ -529,6 +552,14 @@ body.skin-starfield .fs-stars{display:block;}
         <div class="pill" data-val="24h" onclick="setS('cardFmt','24h')">24h</div>
         <div class="pill" data-val="both" onclick="setS('cardFmt','both')">&#20004;&#31181;</div>
       </div>
+      <div class="slbl" id="sRowStyle">列表强调样式</div>
+      <div class="pills" id="rowStylePills">
+        <div class="pill" data-val="vivid" onclick="setS('rowStyle','vivid')">彩色渐变</div>
+        <div class="pill" data-val="pin" onclick="setS('rowStyle','pin')">彩色定位</div>
+        <div class="pill" data-val="classic" onclick="setS('rowStyle','classic')">经典圆点</div>
+      </div>
+      <div class="srow"><div class="srow-lbl">显示 UTC 时差</div>
+      <label class="tog"><input type="checkbox" id="togUtcOff"><span class="tog-sl"></span></label></div>
       <div class="slbl" id="sFontsize">Font Size</div>
       <div class="scale-row">
         <span style="font-size:11px;color:var(--text3);">A</span>
@@ -706,9 +737,9 @@ var SKINS=[
   {id:'starfield',name:'\u661f\u7a7a\u7070',en:'Starfield',grad:'linear-gradient(135deg,#a5b4fc,#7dd3fc)',bg:'rgba(5,10,24,.9)'},
   {id:'dst',name:'DST\u5e86\u5178',en:'DST Special',grad:'linear-gradient(135deg,#c084fc,#f0abfc)',bg:'rgba(10,0,26,.9)'},
 ];
-var DOT_COLORS={'dc-purple':'#a78bfa','dc-sky':'#38bdf8','dc-rose':'#fb7185','dc-amber':'#fbbf24','dc-teal':'#2dd4bf','dc-green':'#86efac','dc-orange':'#fb923c','dc-lime':'#a3e635','dc-pink':'#f472b6','dc-indigo':'#818cf8'};
+var DOT_COLORS={'dc-purple':'#a78bfa','dc-sky':'#38bdf8','dc-rose':'#fb7185','dc-amber':'#fbbf24','dc-teal':'#2dd4bf','dc-green':'#86efac','dc-orange':'#fb923c','dc-lime':'#a3e635','dc-pink':'#f472b6','dc-indigo':'#818cf8','dc-blue':'#60a5fa','dc-violet':'#c084fc','dc-red':'#f87171','dc-yellow':'#facc15'};
 
-var DS={lang:'zh',timeFmt:'12h',dateFmt:'short',cardFmt:'both',convFmt:'12h',showAlt:true,showSec:true,fontScale:100,skin:'default',font:'DM Sans',fsMode:'clock',fsTimeFmt:'12h',fsDark:false,fsClockDark:false,fsShowDate:true,fsScale:100,primaryTz:'Australia/Melbourne',mainDark:false,clockTzs:['Australia/Melbourne','Asia/Seoul','America/Sao_Paulo','Europe/Madrid','Europe/Paris','America/New_York','Asia/Tokyo','Asia/Shanghai']};
+var DS={lang:'zh',timeFmt:'12h',dateFmt:'short',cardFmt:'both',convFmt:'12h',showAlt:true,showSec:true,showUtcOffset:false,fontScale:100,skin:'default',font:'DM Sans',fsMode:'clock',fsTimeFmt:'12h',fsDark:false,fsClockDark:false,fsShowDate:true,fsScale:100,primaryTz:'Australia/Melbourne',mainDark:false,rowStyle:'vivid',clockTzs:['Australia/Melbourne','Europe/Madrid','Europe/Belgrade','Asia/Seoul','America/Sao_Paulo','Europe/Athens','Europe/Rome','Europe/Vienna','Asia/Phnom_Penh','Europe/Amsterdam','America/New_York','Europe/Paris','Asia/Tokyo','Europe/Stockholm']};
 var S={};for(var k in DS)S[k]=DS[k];S.clockTzs=DS.clockTzs.slice();
 try{var sv=localStorage.getItem('sg36');if(sv){var p2=JSON.parse(sv);for(var k in p2)S[k]=p2[k];if(!S.clockTzs)S.clockTzs=DS.clockTzs.slice();}}catch(e){}
 function save(){try{localStorage.setItem('sg36',JSON.stringify(S));}catch(e){}}
@@ -726,6 +757,7 @@ var I18N={
 function t(k){var lng=S.lang==='zh'?'zh':'en';return(I18N[lng]&&I18N[lng][k])?I18N[lng][k]:k;}
 
 function fmt12(d,sec){var h=d.getHours(),m=d.getMinutes(),s=d.getSeconds(),ap=h>=12?'PM':'AM',h12=h%12||12;return sec?h12+':'+pad(m)+':'+pad(s)+' '+ap:h12+':'+pad(m)+' '+ap;}
+function fmtUtcOffset(tz){var mins=getOffsetMin(tz);var sign=mins>=0?'+':'-';var abs=Math.abs(mins);var h=Math.floor(abs/60),m=abs%60;return 'UTC '+sign+h+(m?':'+pad(m):'');}
 function fmt24(d,sec){var h=d.getHours(),m=d.getMinutes(),s=d.getSeconds();return sec?pad(h)+':'+pad(m)+':'+pad(s):pad(h)+':'+pad(m);}
 function fmtPrimary(d){return S.timeFmt==='24h'?fmt24(d,S.showSec):fmt12(d,S.showSec);}
 function fmtCard(d,cf){if(cf==='12h')return fmt12(d,false);if(cf==='24h')return fmt24(d,false);return fmt12(d,false)+' / '+fmt24(d,false);}
@@ -830,6 +862,7 @@ function updatePrimary(){
 }
 
 var dragSrcTz=null;
+function hexA(hex,a){hex=String(hex).replace('#','');if(hex.length===3)hex=hex.split('').map(function(c){return c+c;}).join('');var n=parseInt(hex,16);if(isNaN(n))return'rgba(167,139,250,'+a+')';var r=(n>>16)&255,g=(n>>8)&255,b=n&255;return'rgba('+r+','+g+','+b+','+a+')';}
 function renderGrid(){
   var grid=document.getElementById('clocksGrid');grid.innerHTML='';
   var clks=getClocks();
@@ -838,16 +871,32 @@ function renderGrid(){
     var d=localD(clk.tz);var isDST=isTodayDST(clk.tz);var dstCh=isDST?getDSTChangeToday(clk.tz):null;
     var dstBadge=isDST?'<span class="dst-badge">'+(dstCh&&dstCh.toOff>dstCh.fromOff?'\u2600+1h':'\ud83c\udf42-1h')+'</span>':'';
     var el=document.createElement('div');el.className='clock-item'+(isDST?' dst-today':'');el.draggable=true;el.dataset.tz=clk.tz;
-    el.innerHTML='<div class="drag-handle"><span></span><span></span><span></span></div><div class="cdot '+clk.dot+'"></div><div class="cinfo"><div class="cname-row"><span class="ccountry-main">'+clk.fl+' '+ctName(clk)+'</span><span class="ccity-badge">'+cName(clk)+'</span>'+dstBadge+'</div></div><div class="ctblock"><div class="ctmain">'+fmtCard(d,S.cardFmt)+'</div><div class="ctdate">'+fmtDate(d,S.dateFmt)+' '+getPeriod(d)+relDay(clk.tz,S.primaryTz)+'</div></div>';
-    (function(tz,elem){
+    var rowColor=DOT_COLORS[clk.dot]||'#a78bfa';
+    var vivid=S.rowStyle==='vivid';
+    var pin=S.rowStyle==='pin';
+    var tinted=vivid||pin;
+    if(tinted&&!isDST){el.style.background='linear-gradient(90deg, '+hexA(rowColor,.16)+', '+hexA(rowColor,.045)+' 38%, rgba(255,255,255,.03) 75%)';el.style.borderColor=hexA(rowColor,.22);}
+    var markerHtml=pin
+      ?'<div class="ccode-pin" style="background:'+hexA(rowColor,.18)+';border-color:'+hexA(rowColor,.55)+';color:'+rowColor+';">'+clk.cc+'</div>'
+      :'<div class="cdot'+(vivid?'':' dot-classic')+'" style="color:'+rowColor+';background:'+rowColor+';"></div>';
+    var utcHtml=S.showUtcOffset?'<div class="ctutc"'+(pin?' style="color:'+rowColor+';"':'')+'>'+fmtUtcOffset(clk.tz)+'</div>':'';
+    el.innerHTML='<div class="drag-handle"><span></span><span></span><span></span></div>'+markerHtml
+      +'<div class="cinfo"><div class="cname-row"><span class="ccountry-main">'+clk.fl+' '+ctName(clk)+'</span><span class="ccity-badge">'+cName(clk)+'</span>'+dstBadge+'</div></div>'
+      +'<div class="ctblock"><div class="ctmain">'+fmtCard(d,S.cardFmt)+'</div><div class="ctdate">'+fmtDate(d,S.dateFmt)+' '+getPeriod(d)+relDay(clk.tz,S.primaryTz)+'</div></div>'+utcHtml;
+    (function(tz,elem,rc,dst,tt){
       elem.addEventListener('dragstart',function(e){dragSrcTz=tz;elem.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
       elem.addEventListener('dragend',function(){elem.classList.remove('dragging');var its=grid.querySelectorAll('.clock-item');for(var j=0;j<its.length;j++)its[j].classList.remove('drag-over');});
       elem.addEventListener('dragover',function(e){e.preventDefault();var its=grid.querySelectorAll('.clock-item');for(var j=0;j<its.length;j++)its[j].classList.remove('drag-over');if(tz!==dragSrcTz)elem.classList.add('drag-over');});
       elem.addEventListener('dragleave',function(){elem.classList.remove('drag-over');});
       elem.addEventListener('drop',function(e){e.preventDefault();elem.classList.remove('drag-over');if(!dragSrcTz||dragSrcTz===tz)return;var fi=S.clockTzs.indexOf(dragSrcTz),ti=S.clockTzs.indexOf(tz);if(fi<0||ti<0)return;S.clockTzs.splice(fi,1);S.clockTzs.splice(ti,0,dragSrcTz);dragSrcTz=null;save();renderGrid();});
-    })(clk.tz,el);
+      if(tt&&!dst){
+        elem.addEventListener('mouseenter',function(){elem.style.background='linear-gradient(90deg, '+hexA(rc,.26)+', '+hexA(rc,.08)+' 38%, rgba(255,255,255,.05) 75%)';});
+        elem.addEventListener('mouseleave',function(){elem.style.background='linear-gradient(90deg, '+hexA(rc,.16)+', '+hexA(rc,.045)+' 38%, rgba(255,255,255,.03) 75%)';});
+      }
+    })(clk.tz,el,rowColor,isDST,tinted);
     grid.appendChild(el);
   }
+  updateFooterBar();
 }
 
 function makeAnalog(d,size,darkFace){
@@ -1044,13 +1093,14 @@ function closeSettings(){document.getElementById('settingsOverlay').classList.re
 function openAbout(){applyLang();document.getElementById('aboutOverlay').classList.add('open');}
 function closeAbout(){document.getElementById('aboutOverlay').classList.remove('open');}
 function ovClick(e,id){if(e.target.id===id)document.getElementById(id).classList.remove('open');}
-function syncUI(){pillOn('timeFmtPills',S.timeFmt);pillOn('dateFmtPills',S.dateFmt);pillOn('cardFmtPills',S.cardFmt);document.getElementById('togAlt').checked=S.showAlt;document.getElementById('togSec').checked=S.showSec;rebuildPrimSel();renderAcList();updateFmtPrev();applyFontScale();buildSkinGrid();buildFontSelect();applyLang();updateTimeFmtBtn();}
+function syncUI(){pillOn('timeFmtPills',S.timeFmt);pillOn('dateFmtPills',S.dateFmt);pillOn('cardFmtPills',S.cardFmt);pillOn('rowStylePills',S.rowStyle);document.getElementById('togAlt').checked=S.showAlt;document.getElementById('togSec').checked=S.showSec;document.getElementById('togUtcOff').checked=S.showUtcOffset;rebuildPrimSel();renderAcList();updateFmtPrev();applyFontScale();buildSkinGrid();buildFontSelect();applyLang();updateTimeFmtBtn();}
 function pillOn(gid,val){var pills=document.querySelectorAll('#'+gid+' .pill');for(var i=0;i<pills.length;i++)pills[i].classList.toggle('on',pills[i].dataset.val===val);}
-function setS(key,val){S[key]=val;var gmap={timeFmt:'timeFmtPills',dateFmt:'dateFmtPills',cardFmt:'cardFmtPills'};if(gmap[key])pillOn(gmap[key],val);if(key==='dateFmt')updateFmtPrev();if(key==='timeFmt')updateTimeFmtBtn();save();tick();}
+function setS(key,val){S[key]=val;var gmap={timeFmt:'timeFmtPills',dateFmt:'dateFmtPills',cardFmt:'cardFmtPills',rowStyle:'rowStylePills'};if(gmap[key])pillOn(gmap[key],val);if(key==='dateFmt')updateFmtPrev();if(key==='timeFmt')updateTimeFmtBtn();save();tick();}
 function updateFmtPrev(){document.getElementById('fmtPrev').textContent=fmtDate(localD('Australia/Melbourne'),S.dateFmt)+' '+getPeriod(localD('Australia/Melbourne'));}
 function setPrimary(tz){S.primaryTz=tz;save();renderAcList();tick();_dstDay=-1;}
 document.getElementById('togAlt').addEventListener('change',function(){S.showAlt=this.checked;save();tick();});
 document.getElementById('togSec').addEventListener('change',function(){S.showSec=this.checked;save();tick();});
+document.getElementById('togUtcOff').addEventListener('change',function(){S.showUtcOffset=this.checked;save();tick();});
 function rebuildPrimSel(){var sel=document.getElementById('primSel');sel.innerHTML='';var clks=getClocks();for(var i=0;i<clks.length;i++){var o=document.createElement('option');o.value=clks[i].tz;o.textContent=clks[i].fl+' '+cName(clks[i])+', '+ctName(clks[i]);if(clks[i].tz===S.primaryTz)o.selected=true;sel.appendChild(o);}}
 function renderAcList(){var list=document.getElementById('acList');list.innerHTML='';var clks=getClocks();for(var i=0;i<clks.length;i++){(function(c,idx){var row=document.createElement('div');row.className='ac-row';row.innerHTML='<span class="ac-flag">'+c.fl+'</span><span class="ac-name">'+cName(c)+', '+ctName(c)+(c.tz===S.primaryTz?' <span class="ac-star">\u2605</span>':'')+'</span><button class="ac-rm" onclick="rmCity('+idx+')">&#215;</button>';list.appendChild(row);})(clks[i],i);}rebuildPrimSel();}
 function rmCity(i){if(S.clockTzs.length<=1)return;if(S.clockTzs[i]===S.primaryTz)S.primaryTz=S.clockTzs[i===0?1:0];S.clockTzs.splice(i,1);save();renderAcList();tick();}
@@ -1072,6 +1122,19 @@ function filterAdd(q){
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeSettings();closeAbout();closeFullscreen();}});
 
+var lastSyncTime=new Date();
+function updateFooterBar(){
+  var cnt=document.getElementById('mfbCount');
+  if(cnt)cnt.textContent=(S.lang==='zh'?('共 '+S.clockTzs.length+' 个地点'):(S.clockTzs.length+' locations'));
+  var st=document.getElementById('mfbSyncTime');
+  if(st)st.textContent=(S.lang==='zh'?'更新时间 ':'Updated ')+fmt12(lastSyncTime,true);
+}
+function manualSyncRefresh(){
+  lastSyncTime=new Date();
+  updateFooterBar();
+  var btn=document.getElementById('mfbRefreshBtn');
+  if(btn){btn.classList.remove('spinning');void btn.offsetWidth;btn.classList.add('spinning');}
+}
 function tick(){updatePrimary();renderGrid();updateFS();checkDST();}
 applySkin();applyFont();applyFontScale();applyLang();updateTimeFmtBtn();applyMainDark();
 buildStars(document.getElementById('starsLayer'));
@@ -1989,6 +2052,30 @@ var fxTime = 0;
 var meteorTimer = null;
 var thunderNextFlash = 0, thunderBoltLife = 0, thunderBoltPath = [];
 
+// ── 动态特效可调参数：密度 / 速度 / 随机种子 ──
+var fxDensity = 1, fxSpeedMul = 1, fxSeed = 1;
+var fxRng = Math.random;
+function mulberry32(seed) {
+  return function () {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function reseedFxRng() { fxRng = mulberry32(fxSeed); }
+(function loadSavedFxParams() {
+  try {
+    var d = parseFloat(localStorage.getItem('sg36_fxDensity'));
+    var s = parseFloat(localStorage.getItem('sg36_fxSpeed'));
+    var sd = parseInt(localStorage.getItem('sg36_fxSeed'), 10);
+    fxDensity = isNaN(d) ? 1 : d;
+    fxSpeedMul = isNaN(s) ? 1 : s;
+    fxSeed = isNaN(sd) ? Math.floor(Math.random() * 100000) : sd;
+  } catch (e) { fxSeed = Math.floor(Math.random() * 100000); }
+  reseedFxRng();
+})();
+
 function resizeFxCanvas() {
   fxCanvas.width = window.innerWidth; fxCanvas.height = window.innerHeight;
   fsFxCanvas.width = window.innerWidth; fsFxCanvas.height = window.innerHeight;
@@ -1999,24 +2086,25 @@ resizeFxCanvas();
 function initFxParticles(type) {
   fxParticles = [];
   var W = fxCanvas.width, H = fxCanvas.height;
+  var R = fxRng, D = fxDensity;
   if (type === 'stars') {
-    for (var i = 0; i < 90; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.4+0.4, ph: Math.random()*Math.PI*2, spd: Math.random()*2+1 });
+    for (var i = 0; i < Math.round(90*D); i++) fxParticles.push({ x: R()*W, y: R()*H, r: R()*1.4+0.4, ph: R()*Math.PI*2, spd: R()*2+1 });
   } else if (type === 'leaves') {
     var lc = [['#c2410c','#7c2d12'],['#b45309','#78350f'],['#a16207','#713f12'],['#dc2626','#7f1d1d']];
-    for (var i = 0; i < 20; i++) { var c = lc[Math.floor(Math.random()*lc.length)]; fxParticles.push({ x: Math.random()*W, y: Math.random()*H, vy: Math.random()*0.8+0.6, sway: Math.random()*Math.PI*2, swaySpd: Math.random()*0.022+0.012, rot: Math.random()*360, rotSpd: Math.random()*1.2+0.4, size: Math.random()*5+7, c1: c[0], c2: c[1] }); }
+    for (var i = 0; i < Math.round(20*D); i++) { var c = lc[Math.floor(R()*lc.length)]; fxParticles.push({ x: R()*W, y: R()*H, vy: R()*0.8+0.6, sway: R()*Math.PI*2, swaySpd: R()*0.022+0.012, rot: R()*360, rotSpd: R()*1.2+0.4, size: R()*5+7, c1: c[0], c2: c[1] }); }
   } else if (type === 'glow') {
     var hues = ['rgba(167,139,250,','rgba(56,189,248,','rgba(251,113,133,'];
-    for (var i = 0; i < 3; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*160+120, hue: hues[i%3], ph: Math.random()*Math.PI*2 });
+    for (var i = 0; i < 3; i++) fxParticles.push({ x: R()*W, y: R()*H, r: R()*160+120, hue: hues[i%3], ph: R()*Math.PI*2 });
   } else if (type === 'snow') {
-    for (var i = 0; i < 70; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*2.2+1, sway: Math.random()*Math.PI*2, swaySpd: Math.random()*0.015+0.005, vy: Math.random()*0.5+0.25 });
+    for (var i = 0; i < Math.round(70*D); i++) fxParticles.push({ x: R()*W, y: R()*H, r: R()*2.2+1, sway: R()*Math.PI*2, swaySpd: R()*0.015+0.005, vy: R()*0.5+0.25 });
   } else if (type === 'rain2') {
-    for (var i = 0; i < 110; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, len: Math.random()*16+10, vy: Math.random()*5+6 });
+    for (var i = 0; i < Math.round(110*D); i++) fxParticles.push({ x: R()*W, y: R()*H, len: R()*16+10, vy: R()*5+6 });
   } else if (type === 'thunder') {
-    for (var i = 0; i < 70; i++) fxParticles.push({ x: Math.random()*W, y: Math.random()*H, len: Math.random()*14+8, vy: Math.random()*4+5 });
-    thunderNextFlash = performance.now() + 2000 + Math.random()*3000;
+    for (var i = 0; i < Math.round(70*D); i++) fxParticles.push({ x: R()*W, y: R()*H, len: R()*14+8, vy: R()*4+5 });
+    thunderNextFlash = performance.now() + 2000 + R()*3000;
     thunderBoltLife = 0; thunderBoltPath = [];
   } else if (type === 'heart') {
-    for (var i = 0; i < 18; i++) fxParticles.push({ x: Math.random()*W, y: H+Math.random()*100, vy: Math.random()*0.35+0.15, sway: Math.random()*Math.PI*2, swaySpd: Math.random()*0.02+0.008, size: Math.random()*14+14, pulseSpd: Math.random()*0.003+0.002 });
+    for (var i = 0; i < Math.round(18*D); i++) fxParticles.push({ x: R()*W, y: H+R()*100, vy: R()*0.35+0.15, sway: R()*Math.PI*2, swaySpd: R()*0.02+0.008, size: R()*14+14, pulseSpd: R()*0.003+0.002 });
   } else if (type === 'meteor') {
     scheduleMeteor();
   }
@@ -2044,7 +2132,7 @@ function drawFx(cv, ctx) {
     ctx.globalAlpha = 1;
   } else if (fxType === 'leaves') {
     fxParticles.forEach(function(l) {
-      l.y += l.vy; l.sway += l.swaySpd; l.rot += (l.rotSpd||0.8);
+      l.y += l.vy*fxSpeedMul; l.sway += l.swaySpd*fxSpeedMul; l.rot += (l.rotSpd||0.8)*fxSpeedMul;
       var x = l.x + Math.sin(l.sway)*18;
       if (l.y > H+20) { l.y = -20; l.x = Math.random()*W; }
       ctx.save(); ctx.translate(x, l.y); ctx.rotate(l.rot*Math.PI/180);
@@ -2069,7 +2157,7 @@ function drawFx(cv, ctx) {
     for (var i = fxParticles.length-1; i >= 0; i--) {
       var m = fxParticles[i];
       m.trail.push({x:m.x,y:m.y}); if (m.trail.length > 14) m.trail.shift();
-      m.x += m.vx*4; m.y += m.vy*4;
+      m.x += m.vx*4*fxSpeedMul; m.y += m.vy*4*fxSpeedMul;
       ctx.lineWidth = 2; ctx.beginPath();
       for (var t = 0; t < m.trail.length; t++) {
         ctx.globalAlpha = t/m.trail.length*0.8; ctx.strokeStyle = 'rgba(255,255,255,0.85)';
@@ -2080,7 +2168,7 @@ function drawFx(cv, ctx) {
     }
   } else if (fxType === 'snow') {
     fxParticles.forEach(function(s) {
-      s.y += s.vy; s.sway += s.swaySpd;
+      s.y += s.vy*fxSpeedMul; s.sway += s.swaySpd*fxSpeedMul;
       var x = s.x+Math.sin(s.sway)*14;
       if (s.y > H+6) { s.y = -6; s.x = Math.random()*W; }
       ctx.globalAlpha = 0.8; ctx.fillStyle = '#fff';
@@ -2090,13 +2178,13 @@ function drawFx(cv, ctx) {
   } else if (fxType === 'rain2') {
     ctx.strokeStyle = 'rgba(180,210,255,0.55)'; ctx.lineWidth = 1.2;
     fxParticles.forEach(function(r) {
-      r.y += r.vy; if (r.y > H+20) { r.y = -20; r.x = Math.random()*W; }
+      r.y += r.vy*fxSpeedMul; if (r.y > H+20) { r.y = -20; r.x = Math.random()*W; }
       ctx.beginPath(); ctx.moveTo(r.x,r.y); ctx.lineTo(r.x-3,r.y+r.len); ctx.stroke();
     });
   } else if (fxType === 'thunder') {
     ctx.strokeStyle = 'rgba(180,210,255,0.4)'; ctx.lineWidth = 1;
     fxParticles.forEach(function(r) {
-      r.y += r.vy; if (r.y > H+20) { r.y = -20; r.x = Math.random()*W; }
+      r.y += r.vy*fxSpeedMul; if (r.y > H+20) { r.y = -20; r.x = Math.random()*W; }
       ctx.beginPath(); ctx.moveTo(r.x,r.y); ctx.lineTo(r.x-2,r.y+r.len); ctx.stroke();
     });
     var now = performance.now();
@@ -2115,7 +2203,7 @@ function drawFx(cv, ctx) {
     }
   } else if (fxType === 'heart') {
     fxParticles.forEach(function(h) {
-      h.y -= h.vy; h.sway += h.swaySpd;
+      h.y -= h.vy*fxSpeedMul; h.sway += h.swaySpd*fxSpeedMul;
       var x = h.x+Math.sin(h.sway)*16;
       if (h.y < -30) { h.y = H+20; h.x = Math.random()*W; }
       var pulse = 1+0.18*Math.sin(fxTime*h.pulseSpd);
@@ -2193,6 +2281,7 @@ function setFxType(type) {
   if (!spBody) return;
 
   var section = document.createElement('div');
+  section.className = 'sp-bgfx-wrap';
   section.innerHTML =
     '<div class="slbl">自定义背景 · Background</div>' +
     '<div class="srow"><div class="srow-lbl">选择背景图片</div>' +
@@ -2225,7 +2314,21 @@ function setFxType(type) {
     '<div class="pill" data-fx="rain2">🌧️ 下雨</div>' +
     '<div class="pill" data-fx="thunder">⚡ 打雷</div>' +
     '<div class="pill" data-fx="heart">💗 心动</div>' +
-    '</div>';
+    '</div>' +
+    '<div class="srow" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:12px;">' +
+    '<div class="srow-lbl">粒子密度</div>' +
+    '<div class="scale-row"><span style="font-size:11px;color:var(--text3);">40%</span>' +
+    '<input class="scale-slider" type="range" min="40" max="200" step="10" value="100" id="fxDensitySlider">' +
+    '<span style="font-size:11px;color:var(--text3);">200%</span>' +
+    '<span class="scale-val" id="fxDensityVal">100%</span></div></div>' +
+    '<div class="srow" style="flex-direction:column;align-items:stretch;gap:6px;">' +
+    '<div class="srow-lbl">动画速度</div>' +
+    '<div class="scale-row"><span style="font-size:11px;color:var(--text3);">40%</span>' +
+    '<input class="scale-slider" type="range" min="40" max="200" step="10" value="100" id="fxSpeedSlider">' +
+    '<span style="font-size:11px;color:var(--text3);">200%</span>' +
+    '<span class="scale-val" id="fxSpeedVal">100%</span></div></div>' +
+    '<div class="srow"><div class="srow-lbl">随机种子 · <span id="fxSeedVal">—</span></div>' +
+    '<button class="pill" id="fxRerollBtn" style="cursor:pointer;">🎲 换一批</button></div>';
   spBody.insertBefore(section, spBody.firstChild);
 
   // 背景图片选取
@@ -2287,6 +2390,130 @@ function setFxType(type) {
     p.addEventListener('click', function() { setFxType(p.dataset.fx); syncFxPills(); });
   });
   syncFxPills();
+
+  // ── 密度 / 速度 / 随机种子 UI 绑定 ──
+  var densityEl = document.getElementById('fxDensitySlider');
+  var speedEl = document.getElementById('fxSpeedSlider');
+  var densityVal = document.getElementById('fxDensityVal');
+  var speedVal = document.getElementById('fxSpeedVal');
+  var seedVal = document.getElementById('fxSeedVal');
+  var rerollBtn = document.getElementById('fxRerollBtn');
+  if (densityEl) {
+    densityEl.value = Math.round(fxDensity * 100);
+    speedEl.value = Math.round(fxSpeedMul * 100);
+    densityVal.textContent = Math.round(fxDensity * 100) + '%';
+    speedVal.textContent = Math.round(fxSpeedMul * 100) + '%';
+    seedVal.textContent = '#' + fxSeed;
+    densityEl.addEventListener('input', function() {
+      fxDensity = parseInt(this.value, 10) / 100;
+      densityVal.textContent = this.value + '%';
+      try { localStorage.setItem('sg36_fxDensity', fxDensity); } catch(e) {}
+      initFxParticles(fxType);
+    });
+    speedEl.addEventListener('input', function() {
+      fxSpeedMul = parseInt(this.value, 10) / 100;
+      speedVal.textContent = this.value + '%';
+      try { localStorage.setItem('sg36_fxSpeed', fxSpeedMul); } catch(e) {}
+    });
+    rerollBtn.addEventListener('click', function() {
+      fxSeed = Math.floor(Math.random() * 100000);
+      reseedFxRng();
+      seedVal.textContent = '#' + fxSeed;
+      try { localStorage.setItem('sg36_fxSeed', fxSeed); } catch(e) {}
+      initFxParticles(fxType);
+    });
+  }
+})();
+
+// ══════════════════════════════════════════
+//   设置面板分栏：常规 / 城市 / 皮肤
+// ══════════════════════════════════════════
+(function buildSettingsTabs() {
+  var body = document.querySelector('.sp-body');
+  if (!body || body.dataset.tabbed) return;
+  body.dataset.tabbed = '1';
+
+  // 自定义背景/特效区块是一个整体包裹的div，先拆包成sp-body的直接子节点，
+  // 分组逻辑才能正确识别其中的各个 .slbl
+  function unwrap(el) {
+    if (!el || !el.parentNode) return;
+    var parent = el.parentNode;
+    while (el.firstChild) parent.insertBefore(el.firstChild, el);
+    parent.removeChild(el);
+  }
+  document.querySelectorAll('.sp-body > .sp-bgfx-wrap').forEach(unwrap);
+
+  var tabStyle = document.createElement('style');
+  tabStyle.textContent =
+    '.sp-tabs{display:flex;gap:4px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}' +
+    '.sp-tabs::-webkit-scrollbar{display:none;}' +
+    '.sp-tab{padding:6px 13px;border-radius:20px;font-size:12px;white-space:nowrap;cursor:pointer;color:var(--text3);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);transition:all .2s;}' +
+    '.sp-tab.on{background:rgba(167,139,250,.22);border-color:rgba(167,139,250,.55);color:#fff;}' +
+    '.sp-tabpage{display:none;}' +
+    '.sp-tabpage.on{display:block;}';
+  document.head.appendChild(tabStyle);
+
+  var TABS = [
+    { id: 'general', label: '常规' },
+    { id: 'city', label: '城市' },
+    { id: 'skin', label: '皮肤' }
+  ];
+  var FORMAT_IDS = ['sTimefmt', 'sAltline', 'sSec', 'sDatefmt', 'sCardfmt', 'sRowStyle'];
+  var GENERAL_IDS = ['sFontsize'];
+  var CITY_IDS = ['sPrimary', 'sActive', 'sAdd'];
+
+  function pickTab(slblNode) {
+    var id = slblNode.id || '';
+    var txt = slblNode.textContent || '';
+    if (CITY_IDS.indexOf(id) >= 0) return 'city';
+    if (FORMAT_IDS.indexOf(id) >= 0) return 'general';
+    if (GENERAL_IDS.indexOf(id) >= 0) return 'general';
+    if (txt.indexOf('自定义背景') >= 0) return 'skin';
+    if (txt.indexOf('动态叠加特效') >= 0) return 'skin';
+    if (txt.indexOf('Theme') >= 0 || txt.indexOf('主题') >= 0) return 'skin';
+    if (txt.indexOf('Font') >= 0) return 'general';
+    return 'general';
+  }
+
+  var groups = { general: [], city: [], skin: [] };
+  var children = Array.prototype.slice.call(body.children);
+  var currentTab = 'general';
+  children.forEach(function (child) {
+    if (child.classList && child.classList.contains('slbl')) currentTab = pickTab(child);
+    groups[currentTab].push(child);
+  });
+
+  var tabBar = document.createElement('div');
+  tabBar.className = 'sp-tabs';
+  var pages = {};
+  TABS.forEach(function (tdef) {
+    var btn = document.createElement('div');
+    btn.className = 'sp-tab';
+    btn.textContent = tdef.label;
+    btn.dataset.tab = tdef.id;
+    btn.addEventListener('click', function () { switchSpTab(tdef.id); });
+    tabBar.appendChild(btn);
+
+    var page = document.createElement('div');
+    page.className = 'sp-tabpage';
+    page.id = 'sptab-' + tdef.id;
+    groups[tdef.id].forEach(function (node) { page.appendChild(node); });
+    pages[tdef.id] = page;
+  });
+
+  body.innerHTML = '';
+  body.appendChild(tabBar);
+  TABS.forEach(function (tdef) { body.appendChild(pages[tdef.id]); });
+
+  window.switchSpTab = function (id) {
+    document.querySelectorAll('.sp-tab').forEach(function (b) { b.classList.toggle('on', b.dataset.tab === id); });
+    document.querySelectorAll('.sp-tabpage').forEach(function (p) { p.classList.toggle('on', p.id === 'sptab-' + id); });
+    try { localStorage.setItem('sg36web_sptab', id); } catch (e) {}
+  };
+  var savedTab = 'general';
+  try { savedTab = localStorage.getItem('sg36web_sptab') || 'general'; } catch (e) {}
+  if (TABS.every(function (t) { return t.id !== savedTab; })) savedTab = 'general';
+  window.switchSpTab(savedTab);
 })();
 </script>
 </html>
