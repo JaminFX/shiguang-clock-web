@@ -413,6 +413,23 @@ body.skin-starfield .fs-stars{display:block;}
 .mp-bg-row{display:flex;align-items:center;gap:7px;margin-top:9px;}
 .mp-bg-row input{accent-color:var(--accent);cursor:pointer;}
 .mp-bg-row span{font-size:11px;color:rgba(255,255,255,.38);cursor:pointer;}
+/* ── 设置面板高对比度优化：仅作用于设置面板，不影响其他界面 ── */
+.settings-panel{background:rgba(23,18,50,.98);}
+.settings-panel .slbl{color:rgba(255,255,255,.52);}
+.settings-panel .srow-lbl{color:rgba(255,255,255,.85);}
+.settings-panel .ac-row{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);}
+.settings-panel .ac-name{color:rgba(255,255,255,.85);}
+.settings-panel .ac-flag{filter:brightness(1.08);}
+.settings-panel .pill{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.68);}
+.settings-panel .pill:hover{background:rgba(255,255,255,.14);color:#fff;}
+.settings-panel .pill.on{background:color-mix(in srgb,var(--accent) 42%,transparent);border-color:color-mix(in srgb,var(--accent) 80%,transparent);color:#fff;}
+.settings-panel .prim-sel{background-color:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.88);}
+.settings-panel .add-srch{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.18);}
+.settings-panel .add-srch::placeholder{color:rgba(255,255,255,.35);}
+.settings-panel .sp-tab{color:rgba(255,255,255,.55);background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);}
+.settings-panel .sp-tab.on{background:color-mix(in srgb,var(--accent) 40%,transparent);border-color:color-mix(in srgb,var(--accent) 75%,transparent);color:#fff;}
+.settings-panel .tz-opt-lbl{color:rgba(255,255,255,.82);}
+.settings-panel .tz-opt-sub{color:rgba(255,255,255,.42);}
 </style>
 </head>
 <body>
